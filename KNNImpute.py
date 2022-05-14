@@ -9,6 +9,7 @@ def preserve_label(train_df):
     labels_c1=train_df['category_lvl1'].unique()
     labels_c2=train_df['category_lvl2'].unique()
     labels_c3=train_df['category_lvl3'].unique()
+
     return labels_c1, labels_c2, labels_c3
     
 
@@ -30,9 +31,13 @@ def encode(target,train_df):
     for columns in target:
         encode_utility(train_df[columns])
 
-    
+# def decode(pred_num, labels):
+#     labels[np.argmax(pred_num)]
+#     print(labels)
+ 
+
 def impute(train_df):
-    imputer = KNNImputer(n_neighbors = 5)
+    imputer = KNNImputer()
     df_imputed = np.round(imputer.fit_transform(train_df[['category_lvl1', 'category_lvl2', 'category_lvl3']]))
     return df_imputed
 
@@ -41,6 +46,7 @@ def clean_csv(df,train_df):
     df ['Title_desc'] = train_df['titleDescp']
     # print("IMPUTED DATA SET : \n")
     # print(df)
-    df.to_csv('train_clean.csv')
+    df.to_csv('train_clean.csv', index=False, header=True)   # Delete train_clean.csv in dir before running this
+    
     return df
 

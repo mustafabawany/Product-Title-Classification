@@ -14,6 +14,7 @@ def NullStatistics(df):
     missing_percent = (missing_val.sum()/total_cells) *100
     print(f'\nThe missing data percent is: {missing_percent}')
 
+
 trainingDataset=getTrainingDataset()
 print(trainingDataset)
 
@@ -24,8 +25,10 @@ NullStatistics(train_df)
 
 unique_label_c1, unique_label_c2, unique_label_c3 = preserve_label(train_df) #It has all unique values lying in ctg1 , 2 , 3 column
 
-encode(['category_lvl1', 'category_lvl2', 'category_lvl3'],train_df)        #Performed encoding for CTGLVL3 KNN
+encode(['category_lvl1', 'category_lvl2', 'category_lvl3'],train_df)        #Performed encoding to change categorical data in numeric values
 
 train_df_imputed = impute(train_df)
 train_df_imputed = clean_csv(train_df_imputed,train_df)
 NullStatistics(train_df_imputed)
+print(train_df_imputed)
+
