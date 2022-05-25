@@ -1,0 +1,29 @@
+{% extends 'Navbar.html' %}
+ 
+{% block head %}
+
+  <link rel="stylesheet" href="{{ url_for('static' , filename='css/upload-product.css') }}">
+
+{% endblock %}
+
+{% block body %} 
+
+<div id="Main">
+    <h1>Upload Product</h1>
+    <form action = "/product" method="POST">
+        <div class="mb-3">
+            <label for="formFile" class="form-label" >Title</label>
+            <input class="form-control" name="title" type="text" id="formFile">
+        </div>
+        <div class="mb-3">
+            <label for="formFileMultiple" class="form-label">Description</label>
+            <textarea class="form-control" name="description" rows="10" cols="50" id="formFileMultiple" multiple></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="formFileSm" class="form-label">Product Image</label>
+            <input class="form-control form-control-md" name="productImage" id="formFileSm" type="file">
+        </div>
+        <button type="submit" class="btn btn-info">Submit</button>
+    </form>
+    
+{% endblock %}

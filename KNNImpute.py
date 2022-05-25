@@ -22,7 +22,6 @@ def encode_utility(data):
     impute_reshape = nonulls.reshape(-1,1)
     #encode date
     impute_ordinal = encoder.fit_transform(impute_reshape)
-    #impute_ordinal = pd.get_dummies(impute_reshape).values # one hot encoding   #Not working
     #Assign back encoded values to non-null values
     data.loc[data.notnull()] = np.squeeze(impute_ordinal)
     return data
@@ -30,11 +29,7 @@ def encode_utility(data):
 def encode(target,train_df):
     for columns in target:
         encode_utility(train_df[columns])
-
-# def decode(pred_num, labels):
-#     labels[np.argmax(pred_num)]
-#     print(labels)
- 
+        
 
 def impute(train_df):
     imputer = KNNImputer()
@@ -44,8 +39,6 @@ def impute(train_df):
 def clean_csv(df,train_df):
     df = pd.DataFrame(df, columns = ['category_lvl1','category_lvl2','category_lvl3'])
     df ['Title_desc'] = train_df['titleDescp']
-    # print("IMPUTED DATA SET : \n")
-    # print(df)
     df.to_csv('train_clean.csv', index=False, header=True)   # Delete train_clean.csv in dir before running this
     
     return df
