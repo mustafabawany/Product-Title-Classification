@@ -1,0 +1,26 @@
+{% extends 'Navbar.html' %}
+ 
+{% block head %}
+
+  <link rel="stylesheet" href="{{ url_for('static' , filename='css/product.css') }}">
+
+{% endblock %}
+
+{% block body %} 
+
+    <div id="Main">
+        <div class="row">
+            <div class="col-md-6">
+                <img class= "active" src="../static/images/{{Image}}"  alt="">
+            </div>
+            <div class="col-md-6">
+                <div class="product-description">
+                    <span>{{Category_1}} > {{Category_2}} > {{Category_3}} </span>
+                    <h1>{{title}}</h1>
+                    <p>{{description}}</p>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

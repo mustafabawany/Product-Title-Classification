@@ -32,10 +32,9 @@ from sklearn.metrics import classification_report
 # nltk.download('stopwords')
 
 def featureSelection(df):
-    df.drop(['country','sku_id','price','type'],inplace=True,axis=1) #1 means col wise drop hh
+    df.drop(['country','sku_id','price','type'],inplace=True,axis=1) #1 means col wise drop 
     df['titleDescp'] = df['title']+" "+df['description']
-    df.drop(['title', 'description'],inplace=True,axis=1)  #this line is not tested
-    # df['titleDescp'] Print karke dekhlena if wanting to
+    df.drop(['title', 'description'],inplace=True,axis=1) 
     Y1 = df['category_lvl1']
     Y2 = df['category_lvl2']
     Y3 = df['category_lvl3']
@@ -57,8 +56,7 @@ def PreProcessing(content):
     return stemmed_content
 
 def Cleaning_Data_Utility(training_df):
-    
-    X,Y1,Y2,Y3=featureSelection(training_df) #X is our data through which we are going to predict , Y are going to be predicted
-    print(X['titleDescp'])
+    X,Y1,Y2,Y3=featureSelection(training_df) 
     X['titleDescp'] = X['titleDescp'].apply(PreProcessing)
+    
     return X,Y1,Y2,Y3
