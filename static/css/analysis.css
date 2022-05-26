@@ -6,7 +6,7 @@ body{
 }
 
 .glassmorphic{
-    background: rgba( 80, 227, 194, 0.5 );
+    background: rgb(255, 255, 255);
     box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
     backdrop-filter: blur( 5px );
     -webkit-backdrop-filter: blur( 5px );

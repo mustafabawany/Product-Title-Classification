@@ -66,7 +66,7 @@ body {
 }
 
 .product-description span {
-  font-size: 16px;
+  font-size: 13px;
   color: #358ED7;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -74,9 +74,9 @@ body {
 }
 .product-description h1 {
   font-weight: 300;
-  font-size: 40px;
+  font-size: 24px;
   color: #43484D;
-  letter-spacing: -2px;
+  /* letter-spacing: 1px; */
 }
 .product-description p {
   font-size: 16px;
