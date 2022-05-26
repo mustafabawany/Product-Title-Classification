@@ -22,7 +22,7 @@ from sklearn.svm import SVC
 from sklearn.preprocessing import StandardScaler
 
 from sklearn.tree import DecisionTreeClassifier
-from sklearn import svm   # Baseline
+from sklearn import svm   
 
 # ------- Validation metrics
 from sklearn.metrics import accuracy_score    
@@ -35,7 +35,6 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import hamming_loss                  
 from sklearn.metrics import classification_report
 
-
 from KNNImpute import *
 from Utilities import *
 
@@ -46,10 +45,8 @@ productImage = ""
 
 @app.route("/" , methods=['POST' , 'GET'])
 
-
 def home():
     return render_template('HomePage.html')
-
 
 @app.route("/upload-product" , methods=['POST' , 'GET'])
 
@@ -69,14 +66,13 @@ def showProduct():
         unique_Labels_Ctg1 , unique_Labels_Ctg2 , unique_Labels_Ctg3 = Get_Unique_Labels()
         Ctg1 = decode_cat01(int(model1),unique_Labels_Ctg1)
         Ctg2 = decode_cat02(int(model2),unique_Labels_Ctg2)
-        Ctg3 = decode_cat03(int(model3),unique_Labels_Ctg3)
-        return render_template('Products.html' , title=productTitle , description=productDescription , Image=productImage , Category_1 = Ctg1 , Category_2 = Ctg2 , Category_3 = Ctg3)
+        Ctg3 = decode_cat03(int(model3),unique_Labels_Ctg3) 
+        return render_template('Products.html' , title=productTitle , description=productDescription , Image=productImage , Category_1 = Ctg1[2:-2] , Category_2 = Ctg2[2:-2] , Category_3 = Ctg3[2:-2])
     
 @app.route("/analysis" , methods=['GET'])
 
 def analysis():
     return render_template("Analysis.html")
-
 
 if __name__ == "__main__":
     
@@ -93,14 +89,12 @@ if __name__ == "__main__":
         m1 , m2 , m3 = Load_Svm_Models()
         tfidf_transformer_query = TfidfVectorizer()
         tfidf_transformer_query.fit_transform(query)
-
         for word in tfidf_transformer_query.vocabulary_.keys():
             if word in tfidf_vectorizer.vocabulary_:
                 corpus_vocabulary[word]
 
         tfidf_transformer_query_sec = TfidfVectorizer(vocabulary=corpus_vocabulary)
         query_tfidf_matrix = tfidf_transformer_query_sec.fit_transform(query)
-
         return m1.predict(query_tfidf_matrix) , m2.predict(query_tfidf_matrix) , m3.predict(query_tfidf_matrix)
 
     def decode_cat01(number,unique_label_c1):
@@ -108,7 +102,6 @@ if __name__ == "__main__":
         le.fit(unique_label_c1)
         LabelEncoder()
         le.transform(unique_label_c1)
-
         return str(le.inverse_transform([number]))
 
     def decode_cat02(number,unique_label_c2):
@@ -116,7 +109,6 @@ if __name__ == "__main__":
         le.fit(unique_label_c2)
         LabelEncoder()
         le.transform(unique_label_c2)
-
         return str(le.inverse_transform([number]))
 
     def decode_cat03(number,unique_label_c3):
@@ -124,46 +116,13 @@ if __name__ == "__main__":
         le.fit(unique_label_c3)
         LabelEncoder()
         le.transform(unique_label_c3)
-
         return str(le.inverse_transform([number]))
     
     def Get_Unique_Labels():
         train_df = pd.read_csv("labels.csv")
-        # print(train_df)
         unique_label_c1=train_df['category_lvl1'].dropna().unique()
         unique_label_c2=train_df['category_lvl2'].dropna().unique()
         unique_label_c3=train_df['category_lvl3'].dropna().unique()
         return unique_label_c1,unique_label_c2,unique_label_c3
-    # def featureSelection(df):
-    #     df.drop(['country','sku_id','price','type'],inplace=True,axis=1) #1 means col wise drop hh
-    #     df['titleDescp'] = df['title']+" "+df['description']
-    #     df.drop(['title', 'description'],inplace=True,axis=1)  #this line is not tested
-    #     # df['titleDescp'] Print karke dekhlena if wanting to
-    #     Y1 = df['category_lvl1']
-    #     Y2 = df['category_lvl2']
-    #     Y3 = df['category_lvl3']
-
-    #     return df,Y1,Y2,Y3
-
-    # def PreProcessing(content):
-    #     ps = PorterStemmer()
-    #     CLEANR = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
-
-    #     # Using str(content) because there are some float values in combined
-    #     stemmed_content = re.sub('[^a-zA-Z]',' ',str(content))   # Dropping all encodings, numbers etc
-    #     stemmed_content = re.sub(CLEANR, '',stemmed_content)
-    #     stemmed_content = stemmed_content.lower()
-    #     stemmed_content = stemmed_content.split()
-    #     stemmed_content = [ps.stem(word) for word in stemmed_content if not word in stopwords.words('english')]
-    #     stemmed_content = ' '.join(stemmed_content)
-
-    #     return stemmed_content
-
-    # def Cleaning_Data_Utility(training_df):
-        
-    #     X,Y1,Y2,Y3=featureSelection(training_df) #X is our data through which we are going to predict , Y are going to be predicted
-    #     print(X['titleDescp'])
-    #     X['titleDescp'] = X['titleDescp'].apply(PreProcessing)
-    #     return X,Y1,Y2,Y3
 
     app.run(debug=True)
